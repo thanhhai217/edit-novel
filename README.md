@@ -22,4 +22,5 @@ Web app Python (FastAPI backend, frontend đơn giản) tự động biên tập
 - Frontend: HTML/JS đơn giản (có thể dùng Jinja2 hoặc React/Vue nếu muốn mở rộng)
 - Thư mục scripts, static, templates
 
+## Chạy dự án:
 uvicorn app.main:app --reloaduvicorn app.main:app --reload

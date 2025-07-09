@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Novel</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Edit Novel - Biên tập truyện tự động</h1>
+    <form id="edit-form">
+        <label>URL truyện: <input type="text" name="novel_url" required></label><br>
+        <label>Chương bắt đầu: <input type="number" name="start_chapter" required></label><br>
+        <label>Chương kết thúc: <input type="number" name="end_chapter" required></label><br>
+        <button type="submit">Bắt đầu</button>
+    </form>
+    <div id="progress-bar" style="width:100%;background:#eee;margin:20px 0;display:none;">
+        <div id="progress" style="width:0;height:24px;background:#4caf50;color:#fff;text-align:center;line-height:24px;">0%</div>
+    </div>
+    <pre id="log" style="background:#222;color:#eee;padding:10px;height:200px;overflow:auto;"></pre>
+    <script src="/static/app.js"></script>
+</body>
+</html>

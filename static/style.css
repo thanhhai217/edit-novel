@@ -1,0 +1,9 @@
+body { font-family: Arial, sans-serif; background: #f9f9f9; }
+h1 { color: #333; }
+form { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; max-width: 500px; margin: 20px auto; }
+label { display: block; margin: 10px 0 5px; }
+input, textarea { width: 100%; padding: 6px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ccc; }
+button { background: #4caf50; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
+button:hover { background: #388e3c; }
+#progress-bar { max-width: 500px; margin: 20px auto; }
+#log { max-width: 500px; margin: 0 auto; }

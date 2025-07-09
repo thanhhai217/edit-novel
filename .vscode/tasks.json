@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run FastAPI server",
+            "type": "shell",
+            "command": "C:/Users/Hai Thanh/OneDrive/Documents/GitHub/edit-novel/.venv/Scripts/python.exe",
+            "args": ["-m", "uvicorn", "app.main:app", "--reload"],
+            "group": "build",
+            "problemMatcher": []
+        }
+    ]
+}

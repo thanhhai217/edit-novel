@@ -14,12 +14,17 @@ def send_telegram_message(message: str, api_key: str = None, chat_id: str = None
     if not api_key or not chat_id:
         print("[TELEGRAM] Chưa cấu hình API_KEY hoặc CHAT_ID")
         return False
+
     url = f"https://api.telegram.org/bot{api_key}/sendMessage"
-    payload = {"chat_id": chat_id, "text": message, "parse_mode": "HTML"}
+    payload = {
+        "chat_id": chat_id,
+        "text": message,
+        "parse_mode": "HTML"
+    }
     try:
         resp = requests.post(url, json=payload, timeout=5)
         resp.raise_for_status()
         return True
-    except Exception as e:
+    except requests.RequestException as e:
         print(f"[TELEGRAM ERROR] {e}")
         return False

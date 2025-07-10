@@ -1,13 +1,13 @@
 import json
+import time
+from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
-import time
-from pathlib import Path
 from bs4 import BeautifulSoup
 
 def load_cookies(driver, cookies_path):
+    """Nạp cookies từ file vào trình duyệt Selenium."""
     with open(cookies_path, 'r', encoding='utf-8') as f:
         cookies = json.load(f)
     for cookie in cookies:
@@ -18,12 +18,9 @@ def get_chapter_urls(novel_url: str, start_chapter: int, end_chapter: int) -> li
     Sinh danh sách url chương dựa trên url gốc và số chương.
     """
     urls = []
+    base_url = novel_url.rstrip('/')
     for i in range(start_chapter, end_chapter + 1):
-        if novel_url.endswith('/'):
-            url = f"{novel_url}chuong-{i}"
-        else:
-            url = f"{novel_url}/chuong-{i}"
-        urls.append(url)
+        urls.append(f"{base_url}/chuong-{i}")
     return urls
 
 def screenshot_chapter(url, cookies_path, output_path):
@@ -36,33 +33,35 @@ def screenshot_chapter(url, cookies_path, output_path):
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--window-size=1200,3000')
     driver = webdriver.Chrome(options=chrome_options)
-    driver.get("https://metruyencv.com")
-    load_cookies(driver, cookies_path)
-    driver.get(url)
-    time.sleep(2)
-    # Lấy chiều cao trang để chụp full page
-    scroll_height = driver.execute_script("return document.body.scrollHeight")
-    driver.set_window_size(1200, scroll_height)
-    time.sleep(0.5)
-    # Lấy HTML để parse tên truyện, tên chương
-    html = driver.page_source
-    soup = BeautifulSoup(html, "html.parser")
-    # Tên truyện
-    novel_name = ""
-    h1 = soup.find("h1", class_="text-lg text-center text-balance")
-    if h1:
-        a = h1.find("a", class_="text-title font-semibold")
-        if a:
-            novel_name = a.get_text(strip=True)
-    # Tên chương
-    chapter_title = ""
-    h2 = soup.find("h2", class_="text-center text-gray-600 dark:text-gray-400 text-balance")
-    if h2:
-        chapter_title = h2.get_text(strip=True)
-    # Screenshot
-    driver.save_screenshot(str(output_path))
-    driver.quit()
-    return {"novel_name": novel_name, "chapter_title": chapter_title}
+    try:
+        driver.get("https://metruyencv.com")
+        load_cookies(driver, cookies_path)
+        driver.get(url)
+        time.sleep(2)
+        # Lấy chiều cao trang để chụp full page
+        scroll_height = driver.execute_script("return document.body.scrollHeight")
+        driver.set_window_size(1200, scroll_height)
+        time.sleep(0.5)
+        # Lấy HTML để parse tên truyện, tên chương
+        html = driver.page_source
+        soup = BeautifulSoup(html, "html.parser")
+        # Tên truyện
+        novel_name = ""
+        h1 = soup.find("h1", class_="text-lg text-center text-balance")
+        if h1:
+            a = h1.find("a", class_="text-title font-semibold")
+            if a:
+                novel_name = a.get_text(strip=True)
+        # Tên chương
+        chapter_title = ""
+        h2 = soup.find("h2", class_="text-center text-gray-600 dark:text-gray-400 text-balance")
+        if h2:
+            chapter_title = h2.get_text(strip=True)
+        # Screenshot
+        driver.save_screenshot(str(output_path))
+        return {"novel_name": novel_name, "chapter_title": chapter_title}
+    finally:
+        driver.quit()
 
 # Ví dụ sử dụng:
 # urls = get_chapter_urls(novel_url, start_chapter, end_chapter)

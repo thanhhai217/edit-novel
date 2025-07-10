@@ -4,19 +4,129 @@
     <meta charset="UTF-8">
     <title>Edit Novel</title>
     <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            background: #f7f7fa;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 480px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+            padding: 32px 28px 24px 28px;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3a4a;
+            margin-bottom: 28px;
+            font-size: 2rem;
+        }
+        form label {
+            display: block;
+            margin-bottom: 12px;
+            color: #444;
+            font-weight: 500;
+        }
+        form input[type="text"],
+        form input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            margin-top: 4px;
+            margin-bottom: 16px;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: #f9fafb;
+            transition: border 0.2s;
+        }
+        form input:focus {
+            border: 1.5px solid #4caf50;
+            outline: none;
+            background: #fff;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px 0;
+            background: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: #388e3c;
+        }
+        #progress-bar {
+            width: 100%;
+            background: #e0e0e0;
+            margin: 24px 0 10px 0;
+            border-radius: 6px;
+            overflow: hidden;
+            display: none;
+        }
+        #progress {
+            width: 0;
+            height: 26px;
+            background: linear-gradient(90deg, #4caf50 60%, #81c784 100%);
+            color: #fff;
+            text-align: center;
+            line-height: 26px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: width 0.3s;
+        }
+        #log {
+            background: #181c22;
+            color: #e0e0e0;
+            padding: 14px;
+            height: 220px;
+            overflow: auto;
+            border-radius: 6px;
+            font-size: 0.98rem;
+            margin-top: 10px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px 6px 12px 6px;
+            }
+            h1 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Edit Novel - Biên tập truyện tự động</h1>
-    <form id="edit-form">
-        <label>URL truyện: <input type="text" name="novel_url" required></label><br>
-        <label>Chương bắt đầu: <input type="number" name="start_chapter" required></label><br>
-        <label>Chương kết thúc: <input type="number" name="end_chapter" required></label><br>
-        <button type="submit">Bắt đầu</button>
-    </form>
-    <div id="progress-bar" style="width:100%;background:#eee;margin:20px 0;display:none;">
-        <div id="progress" style="width:0;height:24px;background:#4caf50;color:#fff;text-align:center;line-height:24px;">0%</div>
+    <div class="container">
+        <h1>Edit Novel<br><span style="font-size:1rem;font-weight:400;color:#4caf50;">Biên tập truyện tự động</span></h1>
+        <form id="edit-form" autocomplete="off">
+            <label>
+                URL truyện:
+                <input type="text" name="novel_url" required placeholder="https://metruyencv.com/truyen/ten-truyen">
+            </label>
+            <label>
+                Chương bắt đầu:
+                <input type="number" name="start_chapter" min="1" required>
+            </label>
+            <label>
+                Chương kết thúc:
+                <input type="number" name="end_chapter" min="1" required>
+            </label>
+            <button type="submit">Bắt đầu</button>
+        </form>
+        <div id="progress-bar">
+            <div id="progress">0%</div>
+        </div>
+        <pre id="log"></pre>
     </div>
-    <pre id="log" style="background:#222;color:#eee;padding:10px;height:200px;overflow:auto;"></pre>
     <script src="/static/app.js"></script>
 </body>
 </html>

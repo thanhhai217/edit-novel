@@ -22,9 +22,9 @@ def update_novel_content(
         "translated_content": translated_content
     }
     try:
-        resp = requests.post(api_url, json=payload, timeout=15)
-        resp.raise_for_status()
+        response = requests.post(api_url, json=payload, timeout=15)
+        response.raise_for_status()
         return True
-    except Exception as e:
+    except requests.RequestException as e:
         print(f"[API ERROR] {e}")
         return False

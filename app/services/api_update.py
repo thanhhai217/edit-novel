@@ -7,7 +7,7 @@ def update_novel_content(
     novel_url: str,
     chapter_url: str,
     translated_content: str,
-    api_url: str = "https://n8n2.thanhhai217.com/webhook/novel_define_content"
+    api_url: str = "https://n8n.canyou.click/webhook/novel_define_content"
 ) -> bool:
     """
     Gửi nội dung chương đã biên tập lên API hệ thống.

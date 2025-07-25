@@ -33,6 +33,8 @@ app.add_middleware(
 static_dir = Path(__file__).parent.parent / "static"
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
+# Process state management
+process_states = {}
 
 # Serve index.html
 @app.get("/", response_class=HTMLResponse)
@@ -162,3 +164,29 @@ async def process_novel(
             print(f"[MAIN] Hoàn thành xử lý {chapter_url} trong {elapsed:.2f} giây")
         yield "Hoàn thành!\n"
     return StreamingResponse(event_stream(), media_type="text/plain")
+
+
+# Pause processing endpoint
+@app.post("/pause/{process_id}")
+async def pause_process(process_id: str):
+    if process_id in process_states:
+        process_states[process_id]["paused"] = True
+        return {"status": "paused", "process_id": process_id}
+    return {"status": "not_found", "process_id": process_id}
+
+
+# Resume processing endpoint
+@app.post("/resume/{process_id}")
+async def resume_process(process_id: str):
+    if process_id in process_states:
+        process_states[process_id]["paused"] = False
+        return {"status": "resumed", "process_id": process_id}
+    return {"status": "not_found", "process_id": process_id}
+
+
+# Get process status endpoint
+@app.get("/status/{process_id}")
+async def get_process_status(process_id: str):
+    if process_id in process_states:
+        return process_states[process_id]
+    return {"status": "not_found", "process_id": process_id}

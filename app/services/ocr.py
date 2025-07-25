@@ -20,9 +20,12 @@ def ocr_image(image_path: str, lang: str = 'vie') -> str:
     """
     Nhận diện text tiếng Việt từ ảnh bằng Tesseract.
     """
+    print(f"[OCR] Bắt đầu OCR ảnh: {image_path}")
+    print(f"[OCR] Ngôn ngữ: {lang}, Config: {OCR_CONFIG}")
     try:
         with Image.open(image_path) as img:
             text = pytesseract.image_to_string(img, lang=lang, config=OCR_CONFIG)
+        print(f"[OCR] Đã hoàn thành OCR, độ dài text: {len(text)} ký tự")
         return text
     except Exception as e:
         print(f"[OCR ERROR] {e}")

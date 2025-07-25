@@ -13,6 +13,7 @@ def update_novel_content(
     Gửi nội dung chương đã biên tập lên API hệ thống.
     Trả về True nếu thành công, False nếu lỗi.
     """
+    print(f"[API] Đang cập nhật nội dung chương: {title} (Chương {chapter_no})")
     payload = {
         "novel_name": novel_name,
         "title": title,
@@ -22,8 +23,10 @@ def update_novel_content(
         "translated_content": translated_content
     }
     try:
+        print(f"[API] Đang gửi yêu cầu đến: {api_url}")
         response = requests.post(api_url, json=payload, timeout=15)
         response.raise_for_status()
+        print(f"[API] Cập nhật thành công")
         return True
     except requests.RequestException as e:
         print(f"[API ERROR] {e}")

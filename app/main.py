@@ -3,12 +3,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, StreamingResponse
 from pathlib import Path
-import os
 import shutil
 import time
-import asyncio
 import re
 from urllib.parse import urlparse
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 from app.services.chapter_screenshot import get_chapter_urls, screenshot_chapter
 from app.services.image_crop import crop_image
@@ -62,35 +64,44 @@ async def process_novel(
 
             yield f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] [START] {chapter_url}\n"
             start_time = time.time()
+            print(f"[MAIN] Bắt đầu xử lý chapter: {chapter_url}")
 
             # Screenshot
             try:
                 info = screenshot_chapter(chapter_url, str(cookies_path), img_file_path)
                 yield f"[SCREENSHOT] {img_file_path}\n"
+                print(f"[MAIN] Đã chụp màn hình: {img_file_path}")
             except Exception as e:
                 yield f"[SCREENSHOT ERROR] {chapter_url}: {e}\n"
+                print(f"[MAIN ERROR] Screenshot failed: {e}")
                 continue
 
             # Crop image
             try:
-                crop_image(str(img_file_path), top=500, bottom=580)
+                crop_result = crop_image(str(img_file_path), top=500, bottom=580)
+                print(f"[MAIN] Crop result: {'Success' if crop_result else 'Skipped'}")
             except Exception as e:
                 yield f"[CROP ERROR] {chapter_url}: {e}\n"
+                print(f"[MAIN ERROR] Crop failed: {e}")
 
             # OCR
             try:
                 ocr_text = ocr_image(str(img_file_path), lang='vie')
                 yield f"[OCR] {chapter_url} => {len(ocr_text)} chars\n"
+                print(f"[MAIN] OCR completed: {len(ocr_text)} characters")
             except Exception as e:
                 yield f"[OCR ERROR] {chapter_url}: {e}\n"
+                print(f"[MAIN ERROR] OCR failed: {e}")
                 ocr_text = ""
 
             # Gemini AI
             try:
                 edited_text = edit_with_gemini(ocr_text)
                 yield f"[GEMINI] Done editing {chapter_url}\n"
+                print(f"[MAIN] Gemini editing completed: {len(edited_text)} characters")
             except Exception as e:
                 yield f"[GEMINI ERROR] {chapter_url}: {e}\n"
+                print(f"[MAIN ERROR] Gemini editing failed: {e}")
                 edited_text = ""
 
             # Extract info
@@ -98,6 +109,7 @@ async def process_novel(
             chapter_title = info.get("chapter_title", "")
             match = re.search(r"/chuong-(\d+)", chapter_url)
             chapter_no = match.group(1) if match else ""
+            print(f"[MAIN] Extracted info - Novel: {novel_name}, Chapter: {chapter_title}, No: {chapter_no}")
 
             # Clean Gemini output
             unwanted = "Tuyệt vời! Dưới đây là bản biên tập lại của chương truyện, đã cố gắng tối ưu để câu từ mượt mà, tự nhiên và phù hợp với thể loại võ hiệp"
@@ -114,8 +126,10 @@ async def process_novel(
                 f"translated_content: {content_clean}\n"
             )
             txt_file_path.write_text(txt_content, encoding="utf-8")
+            print(f"[MAIN] Đã lưu file text: {txt_file_path}")
 
             # Update API
+            print(f"[MAIN] Đang cập nhật API cho chapter: {chapter_title}")
             api_ok = update_novel_content(
                 novel_name=novel_name,
                 title=chapter_title,
@@ -126,7 +140,7 @@ async def process_novel(
             )
 
             log_msg = f"✅ {chapter_title} (Chương {chapter_no}) đã biên tập xong. File: {txt_file_path}. Update API: {'OK' if api_ok else 'FAIL'}"
-            print(log_msg)
+            print(f"[MAIN] {log_msg}")
             batch_log.append(log_msg)
             send_telegram_message(log_msg)
 
@@ -137,11 +151,14 @@ async def process_novel(
                 shutil.move(str(txt_file_path), str(processed_txt))
                 shutil.move(str(img_file_path), str(processed_img))
                 yield f"[MOVE] Đã chuyển file txt và ảnh vào {processed_dir}\n"
+                print(f"[MAIN] Đã chuyển files vào thư mục processed")
             except Exception as e:
                 yield f"[MOVE ERROR] {chapter_url}: {e}\n"
+                print(f"[MAIN ERROR] Move files failed: {e}")
 
             end_time = time.time()
             elapsed = end_time - start_time
             yield f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] [DONE] {chapter_url} | Thời gian xử lý: {elapsed:.2f} giây\n"
+            print(f"[MAIN] Hoàn thành xử lý {chapter_url} trong {elapsed:.2f} giây")
         yield "Hoàn thành!\n"
     return StreamingResponse(event_stream(), media_type="text/plain")

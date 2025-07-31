@@ -141,7 +141,10 @@ async def process_novel(
                 translated_content=content_clean
             )
 
-            log_msg = f"✅ {chapter_title} (Chương {chapter_no}) đã biên tập xong. File: {txt_file_path}. Update API: {'OK' if api_ok else 'FAIL'}"
+            log_msg = f"""✅ Hoàn thành biên tập
+            📖 {chapter_title} (Chương {chapter_no})
+            📁 File: {txt_file_path}
+            🔄 Update API: {'OK' if api_ok else 'FAIL'}"""
             print(f"[MAIN] {log_msg}")
             batch_log.append(log_msg)
             send_telegram_message(log_msg)

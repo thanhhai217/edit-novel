@@ -1,7 +1,7 @@
 from PIL import Image
 import os
 
-def crop_image(filepath: str, top: int = 500, bottom: int = 580) -> bool:
+def crop_image(filepath: str, top: int = 500, bottom: int = 500) -> bool:
     """
     Crop ảnh: cắt bỏ top px phía trên và bottom px phía dưới.
     Nếu ảnh quá nhỏ (cropHeight <= 0) thì giữ nguyên ảnh gốc.

@@ -1,0 +1,32 @@
+{
+  "novel_info": {
+    "novel_name": "Test Novel",
+    "novel_url": "https://example.com/truyen/test-novel",
+    "created_at": "2025-08-25 18:20:07",
+    "last_updated": "2025-08-25 18:20:07"
+  },
+  "metadata": {
+    "chapters_processed": 0,
+    "total_characters": 0,
+    "editing_style": "default"
+  },
+  "characters": {
+    "character_relations": {
+      "Nhân Vật A": {
+        "Nhân Vật B": "bạn bè",
+        "Nhân Vật C": "địch thủ"
+      }
+    },
+    "pronoun_consistency": {
+      "Nhân Vật A": [
+        "anh ta",
+        "ông ấy"
+      ],
+      "Nhân Vật B": [
+        "cô ấy",
+        "bạn ấy"
+      ]
+    }
+  },
+  "history": []
+}

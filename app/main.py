@@ -9,15 +9,16 @@ import re
 from urllib.parse import urlparse
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
-
 from app.services.chapter_screenshot import get_chapter_urls, screenshot_chapter
 from app.services.image_crop import crop_image
 from app.services.ocr import ocr_image
 from app.services.gemini_edit import edit_with_gemini
 from app.services.api_update import update_novel_content
 from app.services.telegram_notify import send_telegram_message
+from app.services.context_profile_manager import check_and_create_profile, update_profile_stats
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = FastAPI()
 
@@ -112,6 +113,16 @@ async def process_novel(
             match = re.search(r"/chuong-(\d+)", chapter_url)
             chapter_no = match.group(1) if match else ""
             print(f"[MAIN] Extracted info - Novel: {novel_name}, Chapter: {chapter_title}, No: {chapter_no}")
+
+            # Check and create novel profile file
+            if novel_name:
+                try:
+                    profile_path = check_and_create_profile(novel_name, novel_url)
+                    yield f"[PROFILE] Profile file: {profile_path}\n"
+                    print(f"[MAIN] Profile file ready: {profile_path}")
+                except Exception as e:
+                    yield f"[PROFILE ERROR] Could not create profile: {e}\n"
+                    print(f"[MAIN ERROR] Profile creation failed: {e}")
 
             # Clean Gemini output
             unwanted = "Tuyệt vời! Dưới đây là bản biên tập lại của chương truyện, đã cố gắng tối ưu để câu từ mượt mà, tự nhiên và phù hợp với thể loại võ hiệp"

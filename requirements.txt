@@ -8,3 +8,4 @@ requests
 uvicorn
 beautifulsoup4
 lxml
+python-multipart

@@ -5,3 +5,6 @@ selenium
 pytesseract
 google-generativeai
 requests
+uvicorn
+beautifulsoup4
+lxml

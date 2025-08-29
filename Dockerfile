@@ -28,7 +28,7 @@ RUN apt-get update && apt-get install -y \
     libexpat1 \
     libfontconfig1 \
     libgbm1 \
-    libgdk-pixbuf2.0-0 \
+    libgdk-pixbuf-xlib-2.0-0 \
     libglib2.0-0 \
     libgtk-3-0 \
     libnspr4 \
@@ -66,28 +66,3 @@ RUN CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+') \
  && unzip /tmp/chromedriver_linux64.zip -d /usr/local/bin \
  && rm /tmp/chromedriver_linux64.zip \
  && chmod +x /usr/local/bin/chromedriver
-
-# 2) App workspace
-WORKDIR /app
-
-# 3) Cài deps
-#   - Nếu repo có requirements.txt: dùng block này
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
-
-#   - Nếu repo dùng pyproject.toml/poetry, thay bằng:
-# COPY pyproject.toml poetry.lock* /app/
-# RUN pip install --no-cache-dir poetry && \
-#     poetry config virtualenvs.create false && \
-#     poetry install --no-interaction --no-ansi
-
-# 4) Copy code vào image
-COPY . /app
-
-# 5) Biến môi trường & cổng
-ENV PORT=8000
-EXPOSE 8000
-
-# 6) Lệnh chạy app
-#    SỬA "app.main:app" theo module thật sự của bạn
-CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

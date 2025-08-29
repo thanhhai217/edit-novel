@@ -2,6 +2,11 @@
 
 FROM python:3.11-slim
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tesseract-ocr tesseract-ocr-eng tesseract-ocr-vie libtesseract-dev \
+ && rm -rf /var/lib/apt/lists/*
+ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/4.00/tessdata
+
 # 1) System deps (nếu cần build wheels)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential curl && \

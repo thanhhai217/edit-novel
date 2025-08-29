@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  edit-novel:
+    image: ghcr.io/thanhhai217/edit-novel:prod   # hoặc :latest / :v1.0.0
+    restart: always
+    ports:
+      - "8001:8000"   # host:container (app nghe 8000 trong container)
+    environment:
+      WORKERS: "2"
+      LOG_LEVEL: "info"
+      PORT: "8000"
+    volumes:
+      - ./static:/app/static:ro   # nếu muốn override static local khi dev
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  # Tự cập nhật khi tag prod được cập nhật
+  watchtower:
+    image: containrrr/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --label-enable --interval 300 --cleanup --registry-auth

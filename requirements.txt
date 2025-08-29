@@ -1,0 +1,7 @@
+fastapi
+python-dotenv
+Pillow
+selenium
+pytesseract
+google-generativeai
+requests

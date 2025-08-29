@@ -9,7 +9,7 @@ services:
     env_file:
       - stack.env                  # nếu dùng env, file này phải nằm trong repo
     ports:
-      - "8000:8000"
+      - "8088:8000"
     restart: unless-stopped
     pull_policy: build             # ép Docker build thay vì cố pull image không tồn tại
     # healthcheck (nếu có endpoint khỏe):

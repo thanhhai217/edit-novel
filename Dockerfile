@@ -53,18 +53,16 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
-# Install Google Chrome
+# Install Google Chrome (specific version for stability)
 RUN wget -O /tmp/google-chrome-keyring.gpg https://dl.google.com/linux/linux_signing_key.pub \
  && mkdir -p /etc/apt/keyrings/ \
  && mv /tmp/google-chrome-keyring.gpg /etc/apt/keyrings/google-chrome.gpg \
  && echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
- && apt-get update && apt-get install -y google-chrome-stable \
+ && apt-get update && apt-get install -y google-chrome-stable=114.0.5735.90-1 \
  && rm -rf /var/lib/apt/lists/*
 
-# Install Chromedriver
-RUN CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+') \
- && CHROMEDRIVER_VERSION=$(wget -q -O - "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION%%.*}") \
- && wget -q --continue -P /tmp "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" \
+# Install Chromedriver (specific version for stability)
+RUN wget -q --continue -P /tmp "https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip" \
  && unzip /tmp/chromedriver_linux64.zip -d /usr/local/bin \
  && rm /tmp/chromedriver_linux64.zip \
  && chmod +x /usr/local/bin/chromedriver

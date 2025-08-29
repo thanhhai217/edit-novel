@@ -61,9 +61,8 @@ RUN wget -O /tmp/google-chrome-keyring.gpg https://dl.google.com/linux/linux_sig
  && apt-get update && apt-get install -y google-chrome-stable \
  && rm -rf /var/lib/apt/lists/*
 
-# Install Chromedriver (using a known stable version, e.g., 115.0.5790.102)
-# This avoids issues with dynamic version fetching and ensures compatibility.
-RUN wget -q --continue -P /tmp "https://chromedriver.storage.googleapis.com/115.0.5790.102/chromedriver_linux64.zip" \
+# Install Chromedriver (using a known stable version, 114.0.5735.90)
+RUN wget -q --continue -P /tmp "https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip" \
  && unzip /tmp/chromedriver_linux64.zip -d /usr/local/bin \
  && rm /tmp/chromedriver_linux64.zip \
  && chmod +x /usr/local/bin/chromedriver

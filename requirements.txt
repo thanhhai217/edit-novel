@@ -1,12 +1,11 @@
 fastapi
+uvicorn[standard]
 python-multipart
 python-dotenv
 Pillow
-selenium
+selenium>=4.23
 pytesseract
-google-generativeai
 requests
-uvicorn
 beautifulsoup4
 lxml
-pytesseract
+google-generativeai

@@ -1,5 +1,5 @@
 fastapi
-python-dotenv
+python-multipart
 Pillow
 selenium
 pytesseract
@@ -8,4 +8,4 @@ requests
 uvicorn
 beautifulsoup4
 lxml
-python-multipart
+pytesseract

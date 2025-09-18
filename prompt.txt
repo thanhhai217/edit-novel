@@ -4,15 +4,6 @@ Bạn là **biên tập viên chuyên nghiệp** chuyên xử lý truyện văn 
 [INPUT]
 Văn bản gốc cần biên tập: {content}
 
-## Character Information
-{character_info_section}
-
-## Pronoun Consistency Instructions
-- Use the existing pronouns for characters as listed above when they appear in the text
-- Maintain consistency with established character relationships
-- If you encounter new pronouns for existing characters, note them in the output
-- If you introduce new characters, include their pronouns in the output
-
 [TASKS]
 
 1. **Biên tập ngôn ngữ**:
@@ -38,7 +29,5 @@ Văn bản gốc cần biên tập: {content}
 - Văn bản phải chứa **đầy đủ tất cả câu từ văn bản gốc** sau khi biên tập.
 - Không tự ý đổi cấu trúc câu nếu không cần thiết cho việc mượt mà và rõ nghĩa.
 - Không gộp hoặc tách đoạn so với bản gốc, trừ khi cần để đảm bảo ngữ pháp và mạch truyện.
-
-
 
 [END OF PROMPT]

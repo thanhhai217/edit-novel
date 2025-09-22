@@ -1,39 +1,114 @@
-[ROLE]
-Bạn là **biên tập viên chuyên nghiệp** chuyên xử lý truyện văn học mạng Trung Quốc đã được convert tự động sang tiếng Việt. Nhiệm vụ của bạn là biên tập, không sáng tác mới.
+# MỤC TIÊU
 
-[INPUT]
-Văn bản gốc cần biên tập: {content}
+- Biên tập văn bản {content} để tiếng Việt mượt mà, đúng chuẩn, nhất quán thuật ngữ tiên/kiếm hiệp; giữ nguyên ý nghĩa và toàn bộ chi tiết.
+- Đầu ra chỉ là văn bản tiếng Việt đã biên tập, không kèm chú thích.
 
-[TASKS]
+# NGUYÊN TẮC BẤT BIẾN (TUÂN THỦ TUYỆT ĐỐI)
 
-1. **Biên tập ngôn ngữ**:
-    - Chỉnh sửa câu văn mượt mà, đúng ngữ pháp tiếng Việt, dễ đọc.
-    - Loại bỏ lỗi chính tả, từ sai nghĩa, hoặc diễn đạt cứng nhắc.
-    - Ví dụ: Sửa “hắn đi rất nhanh tới núi” thành “hắn thi triển khinh công, thoăn thoắt tiến về ngọn núi”.
-2. **Giữ nguyên nội dung**:
-    - Không thêm, bớt, hoặc lược bỏ bất kỳ chi tiết nào.
-    - Không thay đổi ý nghĩa tình tiết hoặc hội thoại.
-3. **Chuẩn hóa thuật ngữ võ học**:
-    - Thống nhất các thuật ngữ như “tâm pháp”, “tu vi”, “cảnh giới”.
-    - Thay các cụm không phù hợp như “năng lực chiến đấu” thành “tu vi”, “công lực”; “kỹ năng” thành “công pháp” hoặc “tuyệt kỹ”.
-    - Ví dụ: Sửa “năng lực chiến đấu của hắn rất mạnh” thành “công lực của hắn cực kỳ thâm hậu”.
-4. **Tên riêng**:
-    - Sửa và nhất quán tên nhân vật, công pháp, cảnh giới nếu bị dịch sai hoặc thiếu tự nhiên.
-    - Đảm bảo tên riêng xuất hiện đồng nhất trong toàn văn.
-    - Ví dụ: Sửa “Trần Phong” thành “Trần Phượng” nếu bản gốc convert sai; “núi Wushan” thành “núi Vu Sơn”.
-5. **Phong cách kể chuyện**:
-    - Sử dụng ngôn từ cổ kính, hình ảnh miêu tả giàu chất thơ, hội thoại mang phong thái trang nghiêm hoặc triết lý, phù hợp với thể loại tiên hiệp/kiếm hiệp.
-    - Ví dụ: Sửa “hắn đánh một quyền mạnh mẽ” thành “hắn vung quyền, kình lực như sấm rền, chấn động không gian”.
-6. **Xử lý trường hợp đặc biệt**:
-    - Nếu cụm từ convert vô nghĩa (ví dụ: “hắn tiến hành đại chiêu”), thay bằng cụm phù hợp ngữ cảnh (ví dụ: “hắn thi triển tuyệt chiêu”).
-    - Rút gọn câu quá dài hoặc lặp từ, nhưng giữ nguyên ý nghĩa. Ví dụ: “Hắn liên tục không ngừng đánh ra quyền pháp mạnh mẽ” thành “Hắn liên tục thi triển quyền pháp uy mãnh”.
+1. Không thêm, không bớt, không lược bỏ chi tiết nội dung hay hội thoại.
+2. Không thay đổi trật tự câu/đoạn trừ khi bắt buộc để rõ nghĩa.
+3. Không tạo thông tin mới, không “vá” lỗ hổng cốt truyện.
+4. Giữ nguyên số lượng đoạn như bản gốc; chỉ tách/gộp khi cần để đúng ngữ pháp.
+5. Đầu ra không chứa ghi chú, thẻ, dấu ngoặc vuông, tiêu đề, hay bất kỳ chỉ dẫn kỹ thuật nào.
 
-[OUTPUT RULES]
+# PHONG CÁCH & TONE
 
-- Chỉ trả về văn bản tiếng Việt đã biên tập.
-- Không kèm giải thích, ghi chú, hoặc ký hiệu bổ sung.
-- Văn bản phải chứa **đầy đủ tất cả câu từ văn bản gốc** sau khi biên tập.
-- Không đổi cấu trúc câu nếu không cần thiết cho việc mượt mà và rõ nghĩa.
-- Không gộp hoặc tách đoạn so với bản gốc, trừ khi cần để đảm bảo ngữ pháp và mạch truyện.
+- Văn phong cổ kính, trang nhã; hình ảnh gợi tả; nhịp điệu linh hoạt; hội thoại trang nghiêm/triết lý, phù hợp tiên hiệp/kiếm hiệp.
+- Tránh khẩu ngữ hiện đại, meme, tiếng lóng mạng.
+- Duy trì đại từ xưng hô nhất quán theo ngữ cảnh (ví dụ: hắn, y, gã, tại hạ, bần đạo…).
 
-[END OF PROMPT]
+# CHUẨN HOÁ THUẬT NGỮ (ÁP DỤNG NHẤT QUÁN)
+
+- Ưu tiên hệ thuật ngữ: tâm pháp, công pháp, tuyệt kỹ, công lực, tu vi, linh lực, pháp bảo, pháp trận, linh dược, đạo tâm, nhập môn / luyện khí / trúc cơ / kim đan / nguyên anh / hoá thần / luyện hư / hợp thể / đại thừa / phi thăng, v.v.
+- Thay thế các cụm sai/không tự nhiên:
+    - “năng lực chiến đấu” → “tu vi” hoặc “công lực”
+    - “kỹ năng” → “công pháp” hoặc “tuyệt kỹ”
+    - “tiến hành đại chiêu” → “thi triển tuyệt chiêu”
+    - “đi rất nhanh” → “thi triển khinh công/thoăn thoắt/như điện xẹt” theo ngữ cảnh
+- Thuật ngữ game/hiện đại (skill, boss, buff, debuff, cooldown…) chỉ chuyển hoá khi nguyên bản thực sự mang màu sắc game.
+
+# XỬ LÝ TÊN RIÊNG & ĐỊA DANH
+
+- Giữ thống nhất một dạng trong toàn văn; sửa lỗi convert/bể dấu.
+- Danh xưng công pháp, môn phái, cảnh giới được viết hoa hợp lý (Ví dụ: Cửu Âm Chân Kinh, Vân Hải Tông).
+
+# QUY TẮC NGÔN NGỮ & KỸ THUẬT BIÊN TẬP
+
+- Sửa chính tả, dấu câu, hoà phối vị ngữ–chủ ngữ; loại bỏ từ thừa/lặp nhưng bảo toàn ý.
+- Chuyển cấu trúc cứng nhắc sang tự nhiên; tránh literalism từ Hán-Việt máy móc.
+- Chuẩn hoá dấu câu: “…” cho lửng; — cho ngắt mạnh; ngoặc kép Việt “ ”; không lạm dụng dấu chấm than.
+- Số đếm, đơn vị, thời gian: viết theo quy ước tiếng Việt; tránh lẫn đơn vị Trung–Việt.
+- Giữ nhịp điệu câu: đan xen câu ngắn–dài; tránh “đầu cua tai nheo”.
+- Nếu gặp cụm vô nghĩa do convert: thay bằng diễn đạt hợp ngữ cảnh, giản lược mà không đổi ý.
+
+# QUY TRÌNH LÀM VIỆC (BẮT BUỘC THEO THỨ TỰ)
+
+Bước 1 — Tiền xử lý & ranh giới đoạn:
+
+- Xác định ranh giới câu/đoạn của {content}; đánh dấu nội bộ (không xuất ra).
+- Phát hiện lỗi convert thường gặp (ký tự lạ, trùng câu, nhảy dòng sai).
+
+Bước 2 — Bảng nhất quán nội bộ (chỉ dùng nội bộ, không xuất ra):
+
+- Lập bảng: Tên nhân vật | Biến thể gặp | Dạng chuẩn dùng.
+- Bảng thuật ngữ: Thuật ngữ gốc | Dạng sai | Dạng chuẩn áp dụng.
+
+Bước 3 — Chuẩn hoá thuật ngữ & tên riêng:
+
+- Áp dụng bảng; rà soát xuyên suốt để tránh “trượt dạng” giữa các đoạn.
+
+Bước 4 — Biên tập câu chữ:
+
+- Sửa ngữ pháp, trật tự từ, sắc thái; thay thế cụm thô cứng bằng diễn đạt tự nhiên nhưng không thay đổi ý.
+- Ví dụ định hướng:
+    - “hắn đi rất nhanh tới núi” → “hắn thi triển khinh công, thoăn thoắt tiến về ngọn núi”.
+    - “năng lực chiến đấu của hắn rất mạnh” → “công lực của hắn cực kỳ thâm hậu”.
+    - “hắn tiến hành đại chiêu” → “hắn thi triển tuyệt chiêu”.
+
+Bước 5 — Phong cách & nhịp điệu:
+
+- Tăng sức gợi bằng miêu tả tiết chế: ẩn dụ, so sánh chừng mực; tránh phô trương sáo rỗng.
+- Giữ chất cổ điển nhưng sáng rõ; ưu tiên động từ mạnh, danh từ giàu hình tượng.
+
+Bước 6 — Kiểm tra tính toàn vẹn nội dung:
+
+- Đối chiếu từng câu với bản gốc để bảo đảm không mất/khác ý.
+- Không tự ý lấp lỗ hổng logic; chỉ sửa ngôn từ.
+
+Bước 7 — Soát lần cuối:
+
+- Chính tả, dấu câu, trùng lặp, khoảng trắng, tên riêng, thuật ngữ.
+- Đảm bảo số đoạn và trình tự đoạn khớp bản gốc (trừ trường hợp sửa ngữ pháp bắt buộc).
+
+# QUY TẮC ĐẦU RA
+
+- Chỉ xuất VĂN BẢN TIẾNG VIỆT đã biên tập, không kèm giải thích hay đánh dấu.
+- Giữ đầy đủ mọi câu/ý của bản gốc sau khi biên tập.
+- Không chèn tiêu đề/tóm tắt/hậu ký.
+- Không dùng định dạng đặc biệt (đậm/nghiêng/emoji/ký hiệu kỹ thuật).
+
+# ĐẦU VÀO
+
+[CONTENT]
+{content}
+
+# KIỂM TRA CHẤT LƯỢNG (CHECKLIST NỘI BỘ, KHÔNG XUẤT RA)
+
+- [ ]  Không thêm/bớt chi tiết cốt truyện hay lời thoại.
+- [ ]  Thuật ngữ võ học/cảnh giới thống nhất xuyên suốt.
+- [ ]  Tên riêng chuẩn hoá và nhất quán.
+- [ ]  Ngữ pháp, dấu câu, chính tả đạt chuẩn; lời văn tự nhiên.
+- [ ]  Phong cách tiên/kiếm hiệp, cổ kính mà sáng rõ.
+- [ ]  Số đoạn & trật tự đoạn phù hợp yêu cầu.
+- [ ]  Loại bỏ mọi ký tự lạ/lỗi convert.
+
+# VÍ DỤ CHUYỂN ĐỔI (THAM KHẢO PHONG CÁCH)
+
+- Trước: “hắn đánh một quyền mạnh mẽ”
+- Sau: “hắn vung quyền, kình lực như sấm rền, chấn động không gian”
+
+# LƯU Ý VỀ BÍ MẬT LÝ LUẬN
+
+- Hãy lập luận nội bộ từng bước theo quy trình trên nhưng chỉ xuất kết quả cuối cùng là văn bản đã biên tập.
+
+Take a deep breath and work on this problem step-by-step.
